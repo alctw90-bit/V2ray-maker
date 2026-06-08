@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Death Soul Official | Universal Extractor</title>
+    <style>
+        /* =========================================
+           1. BASE & RESET (Pro Level)
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #05050a;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* =========================================
+           2. ANIMATED CLOUDS & BACKGROUND
+           ========================================= */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #0a0a1a 0%, #000000 100%);
+        }
+
+        .cloud {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: floatClouds 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cloud-1 {
+            width: 400px; height: 400px;
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.4), rgba(94, 92, 230, 0.1));
+            top: -10%; left: -10%;
+        }
+
+        .cloud-2 {
+            width: 500px; height: 500px;
+            background: linear-gradient(135deg, rgba(48, 209, 88, 0.2), rgba(0, 0, 0, 0));
+            bottom: -20%; right: -10%;
+            animation-delay: -5s;
+            animation-duration: 25s;
+        }
+
+        .cloud-3 {
+            width: 300px; height: 300px;
+            background: linear-gradient(135deg, rgba(255, 159, 10, 0.2), rgba(255, 69, 58, 0.1));
+            top: 40%; left: 60%;
+            animation-delay: -10s;
+            animation-duration: 18s;
+        }
+
+        @keyframes floatClouds {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 30px) scale(1.1); }
+            100% { transform: translate(-30px, -50px) scale(0.9); }
+        }
+
+        /* =========================================
+           3. PREMIUM GLASSMORPHISM CONTAINER
+           ========================================= */
+        .container {
+            background: rgba(20, 20, 25, 0.4);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            width: 100%;
+            max-width: 650px;
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                        inset 0 0 20px rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            z-index: 10;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: containerEntrance 1s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes containerEntrance {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* =========================================
+           4. HEADER & BRANDING
+           ========================================= */
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h2 {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(to right, #00f2fe 0%, #4facfe 50%, #00f2fe 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .header p {
+            font-size: 13px;
+            color: #a1a1a6;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           5. INPUT & TEXTAREA
+           ========================================= */
+        textarea {
+            width: 100%;
+            height: 140px;
+            background-color: rgba(10, 10, 12, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            color: #e5e5ea;
+            padding: 20px;
+            font-family: 'Fira Code', ui-monospace, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: inset 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        textarea:focus {
+            border-color: #0a84ff;
+            background-color: rgba(20, 20, 25, 0.8);
+            box-shadow: 0 0 25px rgba(10, 132, 255, 0.15), inset 0 4px 15px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        textarea::placeholder {
+            color: #48484a;
+            font-style: italic;
+        }
+
+        /* =========================================
+           6. PRO BUTTONS
+           ========================================= */
+        button.generate-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #0a84ff, #005bb5);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(10, 132, 255, 0.4);
+        }
+
+        button.generate-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg);
+            transition: all 0.5s ease;
+        }
+
+        button.generate-btn:hover::after {
+            left: 150%;
+            transition: 0.7s ease-in-out;
+        }
+
+        button.generate-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 5px 15px rgba(10, 132, 255, 0.3);
+        }
+
+        button.generate-btn.loading {
+            background: #ff9f0a;
+            box-shadow: 0 10px 30px rgba(255, 159, 10, 0.4);
+            pointer-events: none;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            to { opacity: 0.8; transform: scale(0.99); }
+        }
+
+        /* =========================================
+           7. MAC-OS STYLE OUTPUT BOXES
+           ========================================= */
+        .output-section {
+            margin-top: 40px;
+            display: none;
+            opacity: 0;
+        }
+
+        .output-section.show {
+            display: block;
+            animation: slideUpFade 0.7s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .output-group { margin-bottom: 30px; }
+
+        .output-group label {
+            display: inline-block;
+            font-size: 13px;
+            color: #00f2fe;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            padding-left: 5px;
+        }
+
+        .output-box {
+            background-color: #0d0d12;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            box-shadow: inset 0 2px 20px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .output-box:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 2px 20px rgba(0,0,0,0.5), 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .output-box::before {
+            content: '';
+            position: absolute;
+            top: 12px; left: 15px;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: #ff5f56;
+            box-shadow: 18px 0 0 #ffbd2e, 36px 0 0 #27c93f;
+        }
+
+        pre {
+            margin-top: 15px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #30d158;
+            font-family: 'Fira Code', ui-monospace, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        pre::-webkit-scrollbar { width: 4px; }
+        pre::-webkit-scrollbar-track { background: transparent; }
+        pre::-webkit-scrollbar-thumb { background: #48484a; border-radius: 10px; }
+
+        /* =========================================
+           8. INFO LIST (Analysis)
+           ========================================= */
+        .info-list { list-style: none; padding-top: 10px; }
+        .info-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+        .info-list li:hover { background: rgba(255,255,255,0.02); border-radius: 8px; padding: 14px 10px; margin: 0 -10px; }
+        .info-list li:last-child { border-bottom: none; }
+        .info-list li span.label { color: #8e8e93; font-weight: 500; }
+        .info-list li span.value { color: #ffffff; font-weight: 700; text-align: right; }
+
+        .protocol-badge {
+            background: rgba(10, 132, 255, 0.2);
+            color: #0a84ff;
+            border: 1px solid #0a84ff;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(10, 132, 255, 0.3);
+        }
+
+        /* =========================================
+           9. COPY BUTTONS & FOOTER
+           ========================================= */
+        .copy-btn {
+            position: absolute;
+            top: 10px; right: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #a1a1a6;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
+        }
+
+        .copy-btn:hover { background: rgba(10, 132, 255, 0.15); color: #0a84ff; border-color: #0a84ff; }
+        .copy-btn:active { transform: scale(0.9); }
+        .copy-btn.success { background: #30d158; color: #000; border-color: #30d158; box-shadow: 0 0 15px rgba(48,209,88,0.4); }
+
+        .error-card {
+            background: rgba(255, 69, 58, 0.1);
+            border: 1px solid rgba(255, 69, 58, 0.4);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 20px;
+            display: none;
+            color: #ff6b6b;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 69, 58, 0.2);
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translateX(-2px); }
+            20%, 80% { transform: translateX(4px); }
+            30%, 50%, 70% { transform: translateX(-6px); }
+            40%, 60% { transform: translateX(6px); }
+        }
+
+        .footer {
+            margin-top: 35px;
+            text-align: center;
+            font-size: 13px;
+            color: #636366;
+            font-weight: 600;
+        }
+        .footer span {
+            color: #00f2fe;
+            text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+
+<div class="ambient-bg">
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+</div>
+
+<div class="container">
+    <div class="header">
+        <h2>Death Soul Pro</h2>
+        <p>Universal Protocol Extractor</p>
+    </div>
+    
+    <textarea id="rawInput" placeholder="// Paste ANY config, bot log, link, base64 or custom script here..."></textarea>
+    
+    <button class="generate-btn" id="generateBtn" onclick="initProcess()">Initialize Extraction</button>
+    
+    <div class="error-card" id="errorCard"></div>
+
+    <div class="output-section" id="outputSection">
+        
+        <div class="output-group">
+            <label id="linkLabel">1. Connection Link</label>
+            <div class="output-box">
+                <button class="copy-btn" onclick="copyText('vlessLinkText', this)">Copy Link</button>
+                <pre id="vlessLinkText"></pre>
+            </div>
+        </div>
+
+        <div class="output-group">
+            <label id="jsonLabel">2. Standard JSON Payload</label>
+            <div class="output-box">
+                <button class="copy-btn" onclick="copyText('vlessJsonText', this)">Copy JSON</button>
+                <pre id="vlessJsonText"></pre>
+            </div>
+        </div>
+
+        <div class="output-group">
+            <label>3. Advanced Diagnostics 📊</label>
+            <div class="output-box">
+                <ul class="info-list">
+                    <li><span class="label">Protocol Core:</span> <span class="value"><span class="protocol-badge" id="infoProtocol">VLESS</span></span></li>
+                    <li><span class="label">Server Node:</span> <span class="value" id="infoCountry">🔍 Fetching...</span></li>
+                    <li><span class="label">Time to Live (TTL):</span> <span class="value" id="infoExpiry">Calculating...</span></li>
+                    <li><span class="label">Source Tag:</span> <span class="value" id="infoSource">Unknown</span></li>
+                    <li><span class="label">SNI / Bug Host:</span> <span class="value" id="infoSni">Unknown</span></li>
+                    <li><span class="label">Gateway Port:</span> <span class="value" id="infoPort">Unknown</span></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Powered by <span>Death Soul Official (@deathsoul212)</span>
+    </div>
+</div>
+
+<script>
+function initProcess() {
+    const rawInput = document.getElementById('rawInput').value.trim();
+    const btn = document.getElementById('generateBtn');
+    const outputSection = document.getElementById('outputSection');
+    const errorCard = document.getElementById('errorCard');
+
+    outputSection.classList.remove('show');
+    errorCard.style.display = 'none';
+
+    if (!rawInput) {
+        showTriggerButtonError(btn, "⚠️ Empty Payload!");
+        return;
+    }
+
+    btn.innerText = "Deep Scanning System... ⏳";
+    btn.classList.add('loading');
+
+    setTimeout(() => {
+        btn.classList.remove('loading');
+        processConfig(rawInput, btn, outputSection);
+    }, 800);
+}
+
+function decodeBase64Safe(str) {
+    try { 
+        return decodeURIComponent(escape(atob(str.replace(/[\s\r\n]+/g, "")))); 
+    } catch (e) { 
+        return null; 
+    }
+}
+
+function fetchServerLocation(address) {
+    const infoCountryElement = document.getElementById('infoCountry');
+    if (!address || address === "localhost" || address === "127.0.0.1" || address === "1.2.3.4" || address.includes("stream")) {
+        infoCountryElement.innerText = "🌍 Global Bypass Node";
+        return;
+    }
+
+    fetch(`https://ipapi.co/${address}/json/`)
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.country_name) {
+                const flag = data.country_code ? getFlagEmoji(data.country_code) : "📍";
+                infoCountryElement.innerText = `${flag} ${data.country_name}`;
+            } else {
+                guessCountryByExtension(address);
+            }
+        })
+        .catch(() => {
+            guessCountryByExtension(address);
+        });
+}
+
+function getFlagEmoji(countryCode) {
+    const codePoints = countryCode
+        .toUpperCase()
+        .split('')
+        .map(char =>  127397 + char.charCodeAt(0));
+    return String.fromCodePoint(...codePoints);
+}
+
+function guessCountryByExtension(address) {
+    const infoCountryElement = document.getElementById('infoCountry');
+    let addrLower = address.toLowerCase();
+    
+    if(addrLower.includes('.nl') || addrLower.startsWith('nl.')) infoCountryElement.innerText = "🇳🇱 Netherlands";
+    else if(addrLower.includes('.sg') || addrLower.startsWith('sg.')) infoCountryElement.innerText = "🇸🇬 Singapore";
+    else if(addrLower.includes('.us') || addrLower.startsWith('us.')) infoCountryElement.innerText = "🇺🇸 United States";
+    else if(addrLower.includes('.in') || addrLower.startsWith('in.')) infoCountryElement.innerText = "🇮🇳 India";
+    else if(addrLower.includes('.de') || addrLower.startsWith('de.')) infoCountryElement.innerText = "🇩🇪 Germany";
+    else if(addrLower.includes('.hk')) infoCountryElement.innerText = "🇭🇰 Hong Kong";
+    else if(addrLower.includes('.id')) infoCountryElement.innerText = "🇮🇩 Indonesia";
+    else if(addrLower.includes('.bd')) infoCountryElement.innerText = "🇧🇩 Bangladesh";
+    else infoCountryElement.innerText = "🌍 Global Bypass Node";
+}
+
+function processConfig(rawInput, btn, outputSection) {
+    // ইউনিভার্সাল ডিফল্ট ফলব্যাক ভ্যালুসমূহ
+    let protocol = "vless", uuid = "b7599703-8c84-4338-9db3-bd36ef92174e"; 
+    let address = "speed.dulacloud.store", port = "443", path = "/";
+    let sni = "telegram.org", name = "Death-Soul-Bypass", networkType = "ws";
+
+    let jsonParsed = null;
+
+    // মেথড ১: ইনপুট বক্সে পুরো বা আংশিক JSON অবজেক্ট থাকলে তা ফিল্টার করে পার্স করা
+    if (rawInput.includes("{")) {
+        try {
+            const startIdx = rawInput.indexOf("{");
+            const endIdx = rawInput.lastIndexOf("}") + 1;
+            const jsonText = rawInput.substring(startIdx, endIdx);
+            jsonParsed = JSON.parse(jsonText);
+        } catch(e) { jsonParsed = null; }
+    }
+
+    // মেথড ২: র পুরো টেক্সটটাই যদি Base64 এনকোডেড স্ট্রিং হয় (যেমন সম্পূর্ণ vmess লিংক বডি)
+    if (!jsonParsed && !rawInput.includes("://") && decodeBase64Safe(rawInput)) {
+        const decoded = decodeBase64Safe(rawInput);
+        if (decoded && decoded.includes("{")) {
+            try { jsonParsed = JSON.parse(decoded); } catch(e){}
+        } else if (decoded) {
+            rawInput = decoded; // প্লেইন টেক্সট হিসেবে রি-অ্যাসাইন
+        }
+    }
+
+    // স্ট্রাকচারাল এনালাইসিস ইঞ্জিন (যদি JSON অবজেক্ট পাওয়া যায়)
+    if (jsonParsed) {
+        if (jsonParsed.name) name = jsonParsed.name;
+        
+        // ক) বটের ডিক্রিপ্ট করা ডেডিকেটেড অবজেক্ট স্ক্যানিং
+        if (jsonParsed.encryptedLockedConfig && jsonParsed.encryptedLockedConfig.EncryptedLockedConfig) {
+            const innerConfig = jsonParsed.encryptedLockedConfig.EncryptedLockedConfig;
+            
+            if (jsonParsed.encryptedLockedConfig.LockedAppConfig && jsonParsed.encryptedLockedConfig.LockedAppConfig.TunnelType) {
+                protocol = jsonParsed.encryptedLockedConfig.LockedAppConfig.TunnelType.toLowerCase();
+            }
+
+            // আউটবাউন্ড ডেটা রিডার (VLESS/VMESS Core)
+            if (innerConfig.V2RayConfig && innerConfig.V2RayConfig.EncryptedConfig && innerConfig.V2RayConfig.EncryptedConfig.outbounds) {
+                const outbound = innerConfig.V2RayConfig.EncryptedConfig.outbounds[0];
+                if (outbound) {
+                    protocol = outbound.protocol || protocol;
+                    if (outbound.settings && outbound.settings.vnext && outbound.settings.vnext[0]) {
+                        const target = outbound.settings.vnext[0];
+                        address = target.address || address;
+                        port = target.port || port;
+                        if (target.users && target.users[0]) {
+                            uuid = target.users[0].id || target.users[0].password || uuid;
+                        }
+                    }
+                    if (outbound.streamSettings) {
+                        networkType = outbound.streamSettings.network || networkType;
+                        if (outbound.streamSettings.tlsSettings) {
+                            sni = outbound.streamSettings.tlsSettings.serverName || sni;
+                        }
+                        if (outbound.streamSettings.wsSettings) {
+                            path = outbound.streamSettings.wsSettings.path || path;
+                            if(outbound.streamSettings.wsSettings.headers && outbound.streamSettings.wsSettings.headers.Host){
+                                sni = outbound.streamSettings.wsSettings.headers.Host;
+                            }
+                        }
+                    }
+                }
+            } 
+            // খ) SSH ওভার ক্লাউডফ্রন্ট/প্রক্সি টানেল ব্যাকআপ ফলব্যাক (VLESS এ কনভার্ট করার জন্য)
+            else if (innerConfig.SshConfig && innerConfig.InjectConfig) {
+                address = innerConfig.SshConfig.EncryptedHost || address;
+                port = innerConfig.SshConfig.EncryptedPort || port;
+                uuid = innerConfig.SshConfig.EncryptedUsername || uuid;
+                
+                if (innerConfig.InjectConfig.EncryptedServerNameIndication) {
+                    sni = innerConfig.InjectConfig.EncryptedServerNameIndication;
+                }
+                if (innerConfig.InjectConfig.EncryptedPayload) {
+                    const payload = innerConfig.InjectConfig.EncryptedPayload;
+                    if (payload.includes("websocket")) networkType = "ws";
+                    const hostMatch = payload.match(/Host:\s*([^\s\r\n\]\[]+)/i);
+                    if (hostMatch) sni = hostMatch[1].trim();
+                }
+            }
+        }
+        // গ) সাধারণ ক্লায়েন্ট ব্যাকআপ ফরম্যাট JSON (যেমন v2rayNG বা Clash JSON)
+        else {
+            address = jsonParsed.add || jsonParsed.address || jsonParsed.remote_addr || address;
+            port = jsonParsed.port || jsonParsed.remote_port || port;
+            uuid = jsonParsed.id || jsonParsed.uuid || jsonParsed.password || uuid;
+            path = jsonParsed.path || path;
+            sni = jsonParsed.sni || jsonParsed.host || (jsonParsed.ssl ? jsonParsed.ssl.sni : sni);
+            networkType = jsonParsed.net || jsonParsed.network || networkType;
+            if(jsonParsed.ps) name = jsonParsed.ps;
+        }
+    } 
+    // মেথড ৩: স্ট্যান্ডার্ড ইউআরএল লিংক প্রো পার্সিং (vless://, vmess://, trojan://)
+    else {
+        const urlMatch = rawInput.match(/(vless|vmess|trojan):\/\/([^\s]+)/i);
+        if (urlMatch) {
+            protocol = urlMatch[1].toLowerCase();
+            const linkBody = urlMatch[2];
+
+            if (protocol === "vmess") {
+                const decodedVmess = decodeBase64Safe(linkBody.split('#')[0]);
+                if (decodedVmess) {
+                    try {
+                        const vmessObj = JSON.parse(decodedVmess);
+                        address = vmessObj.add || address; port = vmessObj.port || port;
+                        uuid = vmessObj.id || uuid; path = vmessObj.path || path;
+                        sni = vmessObj.sni || vmessObj.host || sni; networkType = vmessObj.net || networkType;
+                        name = vmessObj.ps || name;
+                    } catch(e) {}
+                }
+            } else {
+                try {
+                    const parts = linkBody.split('#');
+                    if (parts[1]) name = decodeURIComponent(parts[1].trim());
+                    const mainPart = parts[0]; const atSplit = mainPart.split('@');
+                    uuid = atSplit[0];
+                    const hostPortQuery = atSplit[1].split('?'); const hostPort = hostPortQuery[0].split(':');
+                    address = hostPort[0]; port = hostPort[1] || port;
+                    if (hostPortQuery[1]) {
+                        const urlParams = new URLSearchParams(hostPortQuery[1]);
+                        sni = urlParams.get('sni') || urlParams.get('peer') || urlParams.get('host') || sni;
+                        path = urlParams.get('path') || path; networkType = urlParams.get('type') || networkType;
+                    }
+                } catch(e) {}
+            }
+        } 
+        // মেথড ৪: হিউরিস্টিক রিজেক্স স্ক্যানিং (যদি শুধু ভাঙা বা অগোছালো টেক্সট পেস্ট করা হয়)
+        else {
+            // ১. UUID বা পাসওয়ার্ড খোঁজা
+            const uuidMatch = rawInput.match(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/);
+            const rawUserMatch = rawInput.match(/(?:"id"|"username"|"password"|encryptedusername)\s*:\s*"([^"]+)"/i);
+            if (uuidMatch) uuid = uuidMatch[0];
+            else if (rawUserMatch) uuid = rawUserMatch[1];
+
+            // ২. ডোমেন নেম বা হোস্ট এড্রেস খোঁজা
+            const domainMatch = rawInput.match(/"(?:address|add|host|encryptedhost)"\s*:\s*"([^"]+)"/i);
+            const fallbackDomain = rawInput.match(/([a-zA-Z0-9-]+\.[a-zA-Z0-9\-.]+)/);
+            if (domainMatch) address = domainMatch[1];
+            else if (fallbackDomain) address = fallbackDomain[1];
+
+            // ৩. পোর্ট নম্বর ফিল্টার
+            const portMatch = rawInput.match(/"(?:port|encryptedport)"\s*:\s*"?(\d+)"?/i);
+            if (portMatch) port = portMatch[1];
+
+            // ৪. পাথ এবং এসএনআই (SNI) ফিল্টার
+            const pathMatch = rawInput.match(/"path"\s*:\s*"([^"]+)"/i); if (pathMatch) path = pathMatch[1];
+            const sniMatch = rawInput.match(/"(?:serverName|sni|host)"\s*:\s*"([^"]+)"/i); 
+            if (sniMatch) sni = sniMatch[1];
+            else {
+                const httpHostMatch = rawInput.match(/Host:\s*([a-zA-Z0-9\-.]+)/i);
+                if (httpHostMatch) sni = httpHostMatch[1].trim();
+            }
+        }
+    }
+
+    // জিওলোকেশন ট্র্যাকিং রান করা
+    fetchServerLocation(address);
+
+    // স্মার্ট এক্সপায়ারি ট্র্যাকার
+    let expiry = "7 Days (Standard)"; 
+    if (rawInput.includes("lifeTime") || rawInput.includes("lifetime") || rawInput.includes("unlimited")) {
+        expiry = "Lifetime 🚀";
+    } else {
+        const daysMatch = rawInput.match(/(\d+)\s*(days|day|দিন|hari|d)/i);
+        if (daysMatch) expiry = `${daysMatch[1]} Days`;
+    }
+
+    // সোর্স চ্যানেল ডিটেক্টর
+    const tgMatch = rawInput.match(/t\.me\/([a-zA-Z0-9_+\-]+)/i);
+    let source = "Death Soul Core";
+    if (tgMatch) source = `@${tgMatch[1]}`;
+
+    // ইন্টারফেস ডেটা রাইটিং
+    document.getElementById('infoProtocol').innerText = "VLESS"; // ফোর্স জেনারেটেড ফরম্যাট
+    document.getElementById('infoExpiry').innerText = expiry;
+    document.getElementById('infoSource').innerText = source;
+    document.getElementById('infoSni').innerText = sni;
+    document.getElementById('infoPort').innerText = port;
+
+    // ক্লিন স্ট্যান্ডার্ড VLESS এবং JSON মেকিং
+    document.getElementById('linkLabel').innerText = "1. Clean VLESS Connection URL";
+    document.getElementById('jsonLabel').innerText = "2. Universal Standard VLESS JSON";
+    
+    // পাথ যাতে ডাবল স্ল্যাশ বা ভুল না হয় তার ক্লিনআপ
+    if (!path.startsWith("/")) path = "/" + path;
+
+    const cleanJson = {
+        "v": "2",
+        "ps": name.replace(/\s+/g, '-'),
+        "add": address,
+        "port": String(port),
+        "id": uuid,
+        "net": networkType,
+        "path": path,
+        "tls": "tls",
+        "sni": sni
+    };
+
+    const finalLink = `vless://${uuid}@${address}:${port}?path=${encodeURIComponent(path)}&security=tls&encryption=none&type=${networkType}&sni=${sni}#${encodeURIComponent(name)}`;
+
+    document.getElementById('vlessJsonText').innerText = JSON.stringify(cleanJson, null, 2);
+    document.getElementById('vlessLinkText').innerText = finalLink;
+    
+    outputSection.classList.add('show');
+    
+    btn.innerText = "✅ Extraction Complete!";
+    btn.style.background = "linear-gradient(135deg, #30d158, #28a745)";
+    btn.style.boxShadow = "0 10px 30px rgba(48, 209, 88, 0.4)";
+    setTimeout(() => resetButton(btn), 2500);
+}
+
+function showError(msg) {
+    const errorCard = document.getElementById('errorCard');
+    errorCard.innerText = msg;
+    errorCard.style.display = 'block';
+}
+
+function showTriggerButtonError(btn, text) {
+    btn.innerText = text;
+    btn.style.background = "linear-gradient(135deg, #ff453a, #dc3545)";
+    btn.style.boxShadow = "0 10px 30px rgba(255, 69, 58, 0.4)";
+    setTimeout(() => resetButton(btn), 2000);
+}
+
+function resetButton(btn) {
+    btn.innerText = "Initialize Extraction";
+    btn.style.background = "linear-gradient(135deg, #0a84ff, #005bb5)";
+    btn.style.boxShadow = "0 10px 30px rgba(10, 132, 255, 0.4)";
+}
+
+function copyText(elementId, btnElement) {
+    const text = document.getElementById(elementId).innerText;
+    const originalText = btnElement.innerText;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        btnElement.innerText = "COPIED!";
+        btnElement.classList.add("success");
+        setTimeout(() => {
+            btnElement.innerText = originalText;
+            btnElement.classList.remove("success");
+        }, 2000);
+    }).catch(err => {
+        btnElement.innerText = "FAILED";
+        setTimeout(() => btnElement.innerText = originalText, 2000);
+    });
+}
+</script>
+
+</body>
+</html>
